@@ -1,7 +1,5 @@
 import axios from 'axios'
 import qs from 'qs'
-// import Vue from 'vue'
-// 配置请求的根路劲
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -15,9 +13,8 @@ export function request(obj) {
     instance.interceptors.request.use(config => {
       // console.log(config)
       NProgress.start()
-      if(sessionStorage.getItem('##$$%%')) {
-        let tokens = JSON.parse(sessionStorage.getItem('##$$%%'))
-        config.headers.Authorization = tokens.token
+      if(this.$store.getters.getToken) {
+        config.headers.Authorization = this.$store.getters.getToken;
       }
       return config
     })

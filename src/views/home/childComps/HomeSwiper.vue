@@ -2,7 +2,7 @@
   <div v-if="banners.length !== 0">
     <swiper>
       <swiper-item v-for="(item, index) in banners" :key="index">
-        <img :src="$root.URL + item.info_covermap" @click="openDetailsScreen(item)">
+        <img v-if="item.info_covermap" :src="$root.URL + item.info_covermap" @click="openDetailsScreen(item)" @load="busEmit">
       </swiper-item>
     </swiper>
   </div>
@@ -34,9 +34,9 @@ export default {
         }
       });
     },
-  },
-  created() {
-    // console.log(this.banners);
+    busEmit() {
+      this.$bus.$emit("ItemImageLoad");
+    },
   },
 };
 </script>

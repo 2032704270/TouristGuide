@@ -31,6 +31,8 @@
 </template>
 <script>
 import Scroll from "../../common/scroll/Scroll";
+
+
 export default {
   name: "Login",
   components: {
@@ -80,11 +82,12 @@ export default {
         }).then(({ data: { data } }) => {
           // console.log(data);
           if (data.code !== 0) return this.$Toast(data.msg);
-          this.$store.commit("userData", {
+          this.$store.dispatch("setToken", {
             token: data.token,
             uName: data.uName,
+          }).then(res => {
+            this.$Toast(data.msg);
           });
-          this.$Toast(data.msg);
           this.$router.push("/profile/" + data.uName);
         });
       });

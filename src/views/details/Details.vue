@@ -25,6 +25,8 @@ import Scroll from "../../common/scroll/Scroll";
 import DetailsContent from "./children/DetailsContent";
 import DetailsComment from "./children/DetailsComment";
 
+import {itemListenerMixin} from "../../common/mixin";
+
 export default {
   name: "Details",
   components: {
@@ -32,6 +34,9 @@ export default {
     DetailsContent,
     DetailsComment,
   },
+  mixins: [
+    itemListenerMixin
+  ],
   data() {
     return {
       data: {},
@@ -55,29 +60,9 @@ export default {
         });
       }
     },
-    // 防抖动
-    debounce(fn, delay) {
-      let timer = null;
-      return () => {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => {
-          fn.apply(this);
-        }, delay);
-      };
-    },
     reloadInfoData() {
       this.init()
     }
-  },
-  mounted() {
-    // 防抖动
-    const refresh = this.debounce(this.$refs.scroll.refresh, 50);
-    // 事件总线
-    this.$bus.$on("ItemImageLoad", () => {
-      this.debounce();
-      // 监听图片加载完就刷新一次scrollHeight
-      refresh();
-    });
   },
   created() {
     this.loading = this.$Loading.service({

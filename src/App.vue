@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view key="key"></router-view>
+    <keep-alive exclude="Profile">
+      <router-view></router-view>
+    </keep-alive>
     <main-tabbar v-if="checkPath()"></main-tabbar>
   </div>
 </template>
@@ -17,6 +19,11 @@ export default {
           '/profile',
           '/profile/',
       ],
+    }
+  },
+  created() {
+    if (sessionStorage.getItem('token')) {
+      this.$store.dispatch("setToken", JSON.parse(sessionStorage.getItem('token')));
     }
   },
   methods: {

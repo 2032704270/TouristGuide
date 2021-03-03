@@ -2,7 +2,7 @@
   <div>
     <!-- 顶部图片-->
     <div class="top">
-      <img :src="$root.URL + info.info_covermap" alt="图片加载中..." class="covermap" @load="busEmit">
+      <img v-if="info.info_covermap" :src="$root.URL + info.info_covermap" alt="图片加载中..." class="covermap" @load="busEmit">
       <div class="textRight">收录时间: {{ info.createTime }}</div>
       <div class="title">{{ info.info_title }}</div>
     </div>
@@ -36,7 +36,7 @@
       <div class="commentBox">
         <div v-for="(item, index) in comment" :key="index" class="comment">
           <div class="leftBox">
-            <img :src="$root.URL + item.headIcon" alt="头像" @load="busEmit">
+            <img v-if="item.headIcon" :src="$root.URL + item.headIcon" alt="头像" @load="busEmit">
           </div>
           <div class="rightBox">
             <p class="username">

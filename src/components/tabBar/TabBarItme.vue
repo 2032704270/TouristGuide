@@ -22,17 +22,8 @@
 				default: 'red'
 			}
 		},
-		data() {
-			return {
-//				isActive: true
-			}
-		},
 		computed: {
 			isActive() {
-				// /home -> item1(/home) = true
-				// /home -> item2(/category) = false
-				// /home -> item3(/cart) = false
-				// /home -> item4(/profile) = false
 				return this.$route.path.indexOf(this.path) !== -1
 			},
 			activeStyle() {
@@ -42,11 +33,9 @@
 		},
 		methods: {
 			itemClick() {
-				this.$store.commit('userData')
 				let path = null;
-				if(sessionStorage.getItem('##$$%%') && this.path === '/profile') {
+				if(this.$store.getters.getToken && this.path === '/profile') {
 					path = this.path + '/' + this.$store.state.uName
-					console.log(path)
 				}else {
 					path = this.path
 				}

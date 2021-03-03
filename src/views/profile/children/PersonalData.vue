@@ -6,7 +6,6 @@
           <i class="el-icon-arrow-left"></i>
         </mt-button>
       </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <!-- scroll -->
     <scroll class="content" :probe-type="3" :pull-up-load="true">
@@ -16,7 +15,7 @@
             <div class="user_tx">
               <span>头像</span>
               <span>
-                <img :src="$root.URL + userData.headIcon" />
+                <img v-if="userData.headIcon" :src="$root.URL + userData.headIcon" />
               </span>
             </div>
             <div class="user_m">
@@ -65,8 +64,8 @@ export default {
   methods: {
     handleClose() {},
     signOut() {
-      sessionStorage.removeItem('##$$%%')
-      this.$router.push('/profile')
+      this.$store.dispatch("signOut");
+      this.$router.push('/profile');
     },
     getUserData() {
       this.$axios({
@@ -84,7 +83,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .box {
-  height: 100vh;
+  height: calc(100vh - 40px);
   z-index: 100;
   position: relative;
   background-color: #f5f5f5;

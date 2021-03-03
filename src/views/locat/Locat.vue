@@ -21,7 +21,7 @@
 
       <!--渲染搜索列表-->
       <div v-else>
-        <div v-for="(item, index) in searchCity" :key="index" class="searchCity" @click="selectCity(item)">
+        <div v-for="(item, index) in searchCity" :key="index" class="searchCity" @click="selectCity(item.city_name)">
           {{ item.city_name }}
         </div>
       </div>
@@ -121,6 +121,7 @@ export default {
       this.$refs.scroll.refresh()
     },
     selectCity(city) {
+      console.log(city)
       window.sessionStorage.setItem("city", JSON.stringify(city));
       this.$router.push("/home");
     }

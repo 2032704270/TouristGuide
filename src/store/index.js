@@ -11,7 +11,6 @@ Vue.use(Vuex)
 const state = {
   token: '',
   uName: '',
-  // activePath: ''
 }
 
 const store = new Vuex.Store({

@@ -4,7 +4,7 @@
       <div class="box" @click="openDetailsScreen(item)" v-for="(item,index) in data" :key="index">
 
         <div class="covermap">
-          <img :src="$root.URL + item.info_covermap" @load="busEmit"/>
+          <img v-if="item.info_covermap" :src="$root.URL + item.info_covermap" @load="busEmit"/>
         </div>
 
         <div class="contentBox">
@@ -72,7 +72,6 @@ export default {
       });
     },
     busEmit() {
-      // 如果执行了一次监听图片是否加载完成,就会执行一次this.$bus.$emit 事件
       this.$bus.$emit("ItemImageLoad");
     },
     uploadInformationList() {

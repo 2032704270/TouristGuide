@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!-- 搜索框-->
+    <home-search :weather="weather"></home-search>
+    <!-- 搜索框end-->
+
     <scroll
         ref="scroll"
         class="content"
@@ -7,9 +11,6 @@
         :pull-up-load="true"
         @pullUpLoad="pullUpLoad"
     >
-      <!-- 搜索框-->
-      <home-search :weather="weather"></home-search>
-      <!-- 搜索框end-->
 
       <!-- 轮播图 -->
       <home-swiper :banners="swiperList"></home-swiper>
@@ -31,6 +32,9 @@ import HomeSearch from "./childComps/HomeSearch";
 import HomeSwiper from "./childComps/HomeSwiper";
 import HomeWeather from "./childComps/HomeWeather";
 import HomeInformation from "./childComps/HomeInformation";
+
+import {itemListenerMixin} from "../../common/mixin";
+
 import request from "axios";
 
 export default {
@@ -42,6 +46,9 @@ export default {
     HomeWeather,
     HomeInformation,
   },
+  mixins: [
+    itemListenerMixin
+  ],
   data() {
     return {
       swiperList: [],
@@ -60,53 +67,35 @@ export default {
       });
     },
     getWeather() {
-      let city = window.sessionStorage.getItem("city");
-      // console.log(city, typeof city)
+      let city = sessionStorage.getItem("city");
       let url = "https://v0.yiketianqi.com/api?version=v61&appid=42324689&appsecret=AapextZ9";
-      if (!city instanceof Object) {
+      if (sessionStorage.getItem("city")) {
         url = url + "&city=" + JSON.parse(city);
       }
       request.get(url).then(({data}) => {
         // console.log(data);
         this.weather = data;
         if (city === null || city === "undefined") {
-          window.sessionStorage.setItem("city", JSON.stringify(data.city));
+          sessionStorage.setItem("city", JSON.stringify(data.city));
         }
       });
     },
     pullUpLoad() {
       this.UpLoad = !this.UpLoad;
     },
-    // 防抖动
-    debounce(fn, delay) {
-      let timer = null;
-      return () => {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => {
-          fn.apply(this);
-        }, delay);
-      };
-    },
-  },
-  mounted() {
-    // 防抖动
-    const refresh = this.debounce(this.$refs.scroll.refresh, 50);
-    // 事件总线
-    this.$bus.$on("ItemImageLoad", () => {
-      this.debounce();
-      // 监听图片加载完就刷新一次scrollHeight
-      refresh();
-    });
   },
   created() {
     this.getSwiperData();
-    this.getWeather();
   },
+  activated() {
+    this.getWeather()
+    this.$bus.$emit("ItemImageLoad");
+  }
 };
 </script>
 <style lang="less" scoped>
 .content {
-  height: calc(100vh - 49px);
+  height: calc(100vh - 49px - 56px);
   overflow: hidden;
 }
 </style>

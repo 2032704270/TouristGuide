@@ -2,7 +2,7 @@
   <div>
     <!-- 头部 -->
     <mt-header title="点赞列表" class="headerNav">
-      <mt-button slot="left" @click="$router.go(-1)">
+      <mt-button slot="left" @click="$router.back()">
         <i class="el-icon-arrow-left"></i>
       </mt-button>
     </mt-header>
@@ -37,6 +37,7 @@
 
 <script>
 import Scroll from "../../../common/scroll/Scroll";
+import {itemListenerMixin} from "../../../common/mixin";
 
 export default {
   name: "PersonalLikes",
@@ -48,19 +49,12 @@ export default {
   components: {
     Scroll,
   },
+  mixins: [
+    itemListenerMixin
+  ],
   methods: {
     pullUpLoad() {
       this.UpLoad = !this.UpLoad;
-    },
-    // 防抖动
-    debounce(fn, delay) {
-      let timer = null;
-      return () => {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => {
-          fn.apply(this);
-        }, delay);
-      };
     },
     openDetailsScreen(item) {
       this.$router.push({
@@ -100,7 +94,7 @@ export default {
 
 <style lang="less" scoped>
 .content {
-  height: 100vh;
+  height: calc(100vh - 40px);
   overflow: hidden;
 }
 

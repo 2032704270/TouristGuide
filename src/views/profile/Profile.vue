@@ -5,14 +5,14 @@
         <!-- top -->
         <div class="box_top" @click="clickLogin">
           <div class="login_box">
-            <div v-if="!isLogin" class="img_box">
+            <div v-if="!getToken" class="img_box">
               <img src="../../assets/logo.png"/>
             </div>
             <div v-else class="img_box_success">
-              <img :src="$root.URL + userData.headIcon"/>
+              <img v-if="userData.headIcon" :src="$root.URL + userData.headIcon"/>
             </div>
             <div class="text_box">
-              <span v-if="!isLogin">
+              <span v-if="!getToken">
                 登陆<span>/</span>注册
                 <span>></span>
               </span>
@@ -37,7 +37,8 @@
   </div>
 </template>
 <script>
-import Scroll from "../../common/scroll/Scroll";
+import Scroll from "../../common/scroll/Scroll"
+import {mapGetters} from "vuex";
 
 export default {
   name: "Profile",
@@ -54,17 +55,8 @@ export default {
     };
   },
   methods: {
-    inofUsder() {
-      if (sessionStorage.getItem("##$$%%")) {
-        // console.log(12);
-        return true;
-      } else {
-        // console.log(34);
-        return false;
-      }
-    },
     clickLogin() {
-      if (!sessionStorage.getItem("##$$%%")) return this.$router.push("/login");
+      if (!this.getToken) return this.$router.push("/login");
       this.$router.push('/personaldata')
     },
     getUserData() {
@@ -122,19 +114,9 @@ export default {
     }
   },
   computed: {
-    isLogin() {
-      if (sessionStorage.getItem("##$$%%")) {
-        return true;
-      }
-      return false;
-    }
+    ...mapGetters(["getToken"]),
   },
   created() {
-    if (sessionStorage.getItem("##$$%%")) {
-      this.$store.commit('userData', JSON.parse(sessionStorage.getItem("##$$%%")))
-    }
-    this.inofUsder();
-    // console.log(this.$route.path)
     this.getUserData();
   },
 };

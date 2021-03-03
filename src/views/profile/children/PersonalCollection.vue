@@ -2,7 +2,7 @@
   <div>
     <!-- 头部 -->
     <mt-header title="收藏列表" class="headerNav">
-      <mt-button slot="left" @click="$router.go(-1)">
+      <mt-button slot="left" @click="$router.back()">
         <i class="el-icon-arrow-left"></i>
       </mt-button>
     </mt-header>
@@ -13,7 +13,7 @@
         <div class="box" @click="openDetailsScreen(item)" v-for="(item,index) in data" :key="index">
 
           <div class="covermap">
-            <img :src="$root.URL + item.info_covermap" @load="busEmit"/>
+            <img v-if="item.info_covermap" :src="$root.URL + item.info_covermap" @load="busEmit"/>
           </div>
 
           <div class="contentBox">
@@ -100,7 +100,7 @@ export default {
 
 <style lang="less" scoped>
 .content {
-  height: 100vh;
+  height: calc(100vh - 40px);
   overflow: hidden;
 }
 

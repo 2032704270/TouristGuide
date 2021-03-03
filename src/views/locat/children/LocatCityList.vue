@@ -8,7 +8,7 @@
     <div v-for="(item,index) in CityList" :key="index">
       <div class="letter" :id="'city' + item.letter.toUpperCase()">{{ item.letter.toUpperCase() }}</div>
       <div class="city" v-for="(city,i) in item.data" :key="i">
-        <div @click="selectCity(city)">{{ city.city_name }}</div>
+        <div @click="selectCity(city.city_name)">{{ city.city_name }}</div>
       </div>
     </div>
 
@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     selectCity(city) {
-      // console.log(JSON.stringify(city))
       window.sessionStorage.setItem("city", JSON.stringify(city));
       this.$router.push("/home");
     }
