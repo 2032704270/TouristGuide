@@ -16,7 +16,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: "http://119.29.68.100/public/",
+        target: "http://119.29.68.100/public",
         // 允许跨域
         changeOrigin: true,
         ws: true,
