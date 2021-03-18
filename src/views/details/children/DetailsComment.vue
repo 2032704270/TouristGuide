@@ -1,7 +1,13 @@
 <template>
   <div class="comment">
-    <input class="textInput" type="text" placeholder="我也来聊几句" v-model="comment"/>
-    <el-button type="primary" size="mini" round @click="report()">发表</el-button>
+    <div class="input-content">
+      <div class="text-input">
+        <input class="textInput" type="text" placeholder="我也来聊几句" v-model="comment"/>
+      </div>
+      <div class="text-report">
+        <el-button type="primary" size="mini" round @click="report()">发表</el-button>
+      </div>
+    </div>
 
     <!-- 评论按钮-->
     <div @click="commentFocus()">
@@ -116,13 +122,25 @@ export default {
   }
 }
 
-.textInput {
-  width: 200px;
-  height: 20px;
-  border-radius: 15px;
-  padding: 10px;
-  font-size: 12px;
-  display: inline-block;
-  border: 2px solid rgba(0, 0, 0, .1);
+.input-content {
+  display: flex !important;
+  .text-input {
+    flex: 2.5;
+    .textInput {
+      width: 100%;
+      height: 28px;
+      border-radius: 15px;
+      padding: 10px;
+      font-size: 12px;
+      display: inline-block;
+      border: 2px solid rgba(0, 0, 0, .1);
+
+    }
+  }
+  .text-report {
+    flex: 1;
+    text-align: center;
+  }
 }
+
 </style>

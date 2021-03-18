@@ -6,8 +6,8 @@ import 'nprogress/nprogress.css'
 export function request(obj) {
   if(obj.method === 'post') obj.data = qs.stringify(obj.data);
     const instance = axios.create({
-      baseURL: '/api/', //解决跨域
-      // baseURL: 'http://119.29.68.100/public/',
+      // baseURL: '/api/', //解决跨域
+      baseURL: 'http://119.29.68.100/public/',
       timeuot: 5000
     })
     instance.interceptors.request.use(config => {

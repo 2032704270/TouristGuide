@@ -76,7 +76,10 @@ export default {
   },
   methods: {
     busEmit() {
-      this.$bus.$emit('ItemImageLoad')
+      this.$bus.$emit('ItemImageLoad');
+      setInterval(() => {
+        this.$bus.$emit('ItemImageLoad')
+      }, 1000)
     },
     evaluate(is) {
       this.loading = this.$Loading.service({

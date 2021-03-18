@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive exclude="Profile">
+    <keep-alive exclude="Profile,Details">
       <router-view></router-view>
     </keep-alive>
     <main-tabbar v-if="checkPath()"></main-tabbar>
